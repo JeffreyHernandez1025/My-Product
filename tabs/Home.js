@@ -104,7 +104,18 @@ export default function Home() {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
       />
-      <Popup visible={modalVisible}/>
+      <Modal
+        animationType='slide'
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.')(!modalVisible)
+        }}
+      >
+        <Pressable onPress={() => setModalVisible(!modalVisible)}>
+          <Text>Hide Modal</Text>
+        </Pressable>
+        <Text> Hello World </Text>
+      </Modal>
     </View>
   )
 }

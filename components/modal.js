@@ -13,20 +13,17 @@ import {
 import React, { useState } from 'react'
 
 export default function Popup(props) {
-const [modalVisible, setModalVisible] = useState(false)
+  const [modalVisible, setModalVisible] = useState(!props.visible)
 
   return (
     <Modal
       animationType='slide'
-      visible={props.visible}
+      visible={modalVisible}
       onRequestClose={() => {
-        Alert.alert('Modal has been closed.')
-        (!modalVisible)
+        Alert.alert('Modal has been closed.')(!modalVisible)
       }}
     >
-      <Pressable
-        onPress={() => console.log(!props.visible)}
-      >
+      <Pressable onPress={() => setModalVisible(!modalVisible)}>
         <Text>Hide Modal</Text>
       </Pressable>
       <Text> Hello World </Text>
