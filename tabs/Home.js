@@ -41,6 +41,10 @@ export default function Home() {
       id: '5',
       opportunity: 'Street Cleaning',
     },
+    {
+      id: '6',
+      opportunity: 'Elementary School',
+    },
   ])
 
   const handleSearch = (text) => {
@@ -112,9 +116,24 @@ export default function Home() {
         }}
       >
         <Pressable onPress={() => setModalVisible(!modalVisible)}>
-          <Text>Hide Modal</Text>
+          <Text style={styles.off}> Back </Text>
         </Pressable>
-        <Text> Hello World </Text>
+        <Text style={styles.name}> {opportunities[0].opportunity} </Text>
+        <View style={styles.desContainer}>
+        <Text style={styles.name2}> Description: </Text>
+        <Text style={styles.des}>
+          {' '}
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.{' '}
+        </Text>
+        </View>
+        <Text style={styles.name3}> Sign Up! </Text>
+        
       </Modal>
     </View>
   )
