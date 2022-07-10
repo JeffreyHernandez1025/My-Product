@@ -1,4 +1,5 @@
 import {
+  Button,
   StyleSheet,
   Text,
   View,
@@ -9,11 +10,37 @@ import {
   Alert,
   Modal,
   Pressable,
+  Linking,
 } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useCallback, Children } from 'react'
 import styles from './styles/styles'
 import filter from 'lodash.filter'
-import Popup from '../components/modal'
+
+// const supportedURL = 'https://saveourshores.org/beachcleanups/'
+
+// const OpenURLButton = ({ url, children }) => {
+//   const handlePress = useCallback(async () => {
+//     // Checking if the link is supported for links with custom URL scheme.
+//     const supported = await Linking.canOpenURL(url)
+
+//     if (supported) {
+//       // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+//       // by some browser in the mobile
+//       await Linking.openURL(url)
+//     } else {
+//       Alert.alert(`Don't know how to open this URL: ${url}`)
+//     }
+//   }, [url])
+
+
+
+//   return (
+//     <Button style={styles.website}
+//       title='https://saveourshores.org/beachcleanups/'
+//       onPress={handlePress}
+//     />
+//   )
+// }
 
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false)
@@ -120,20 +147,36 @@ export default function Home() {
         </Pressable>
         <Text style={styles.name}> {opportunities[0].opportunity} </Text>
         <View style={styles.desContainer}>
-        <Text style={styles.name2}> Description: </Text>
-        <Text style={styles.des}>
-          {' '}
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.{' '}
-        </Text>
+          <Text style={styles.name2}> Description: </Text>
+          <Text style={styles.des}>
+            {' '}
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.{' '}
+          </Text>
         </View>
         <Text style={styles.name3}> Sign Up! </Text>
-        
+        <View style={styles.websiteContainer}>
+          <Text style={styles.name4}> website </Text>
+          {/* <OpenURLButton url={supportedURL} /> */}
+          <Text
+            style={styles.website}
+            onPress={() =>
+              Linking.openURL('https://saveourshores.org/beachcleanups/')
+            }
+          >
+            https://saveourshores.org/beachcleanups/
+          </Text>
+          <Text style={styles.comment}> *Preferred Way to Sign Up* </Text>
+        </View>
+        <View style={styles.locationContainer}>
+          <Text style={styles.name5}> location </Text>
+            <Text stye={styles.location}> 123 Los Angeles Street,90014 </Text>
+        </View>
       </Modal>
     </View>
   )
