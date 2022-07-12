@@ -14,11 +14,10 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
-
-export default function Hours() {
-
- return(
- <View> 
-  <Text> Hello from Hours! </Text>
- </View>
-)}
+export default function Rewards() {
+  return (
+    <View>
+      <Text> Hello from Rewards! </Text>
+    </View>
+  )
+}

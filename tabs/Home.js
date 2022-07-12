@@ -11,36 +11,11 @@ import {
   Modal,
   Pressable,
   Linking,
+  TouchableOpacity,
 } from 'react-native'
 import React, { useState, useCallback, Children } from 'react'
 import styles from './styles/styles'
 import filter from 'lodash.filter'
-
-// const supportedURL = 'https://saveourshores.org/beachcleanups/'
-
-// const OpenURLButton = ({ url, children }) => {
-//   const handlePress = useCallback(async () => {
-//     // Checking if the link is supported for links with custom URL scheme.
-//     const supported = await Linking.canOpenURL(url)
-
-//     if (supported) {
-//       // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-//       // by some browser in the mobile
-//       await Linking.openURL(url)
-//     } else {
-//       Alert.alert(`Don't know how to open this URL: ${url}`)
-//     }
-//   }, [url])
-
-
-
-//   return (
-//     <Button style={styles.website}
-//       title='https://saveourshores.org/beachcleanups/'
-//       onPress={handlePress}
-//     />
-//   )
-// }
 
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false)
@@ -161,7 +136,7 @@ export default function Home() {
         </View>
         <Text style={styles.name3}> Sign Up! </Text>
         <View style={styles.websiteContainer}>
-          <Text style={styles.name4}> website </Text>
+          <Text style={styles.name4}> Website </Text>
           {/* <OpenURLButton url={supportedURL} /> */}
           <Text
             style={styles.website}
@@ -174,8 +149,38 @@ export default function Home() {
           <Text style={styles.comment}> *Preferred Way to Sign Up* </Text>
         </View>
         <View style={styles.locationContainer}>
-          <Text style={styles.name5}> location </Text>
+          <Text style={styles.name5}> Location </Text>
+          <TouchableOpacity
+            onPress={() =>
+              Linking.openURL('maps://app?saddr=100+101&daddr=100+102')
+            }
+          >
             <Text stye={styles.location}> 123 Los Angeles Street,90014 </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.emailContainer}>
+          <Text style={styles.name6}> Email </Text>
+          <Text
+            style={styles.email}
+            onPress={() =>
+              Linking.openURL(
+                'mailto:alejandro@saveourshores.org?subject=SendMail&body=Description'
+              )
+            }
+          >
+            alejandro@saveourshores.org
+          </Text>
+        </View>
+        <View style={styles.phoneNumberContainer}>
+          <Text style={styles.name7}> Phone </Text>
+          <Text
+            style={styles.phoneNumber}
+            onPress={() => Linking.openURL('tel:$831-462-5660')}
+          >
+            {' '}
+            831-462-5660{' '}
+          </Text>
+          <Text style={styles.comment2}> Tap to Call </Text>
         </View>
       </Modal>
     </View>

@@ -81,7 +81,49 @@ export default StyleSheet.create({
   },
   location: {
     textAlign: 'left',
-    color: 'blue',
     fontSize: 14,
+  },
+  name5: {
+    color: 'grey',
+    fontSize: 12,
+  },
+  emailContainer: {
+    borderBottomWidth: 1,
+    paddingBottom: 10,
+    paddingTop: 10,
+    paddingLeft: 5,
+    width: 400,
+    borderColor: 'grey',
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  name6: {
+    color: 'grey',
+    fontSize: 12,
+  },
+  email: {
+    textAlign: 'left',
+    fontSize: 14,
+  },
+  name7: {
+    color: 'grey',
+    fontSize: 12,
+  },
+  phoneNumber: {
+    textAlign: 'left',
+    fontSize: 14,
+  },
+  comment2: {
+    color: 'grey',
+    fontSize: 10,
+  },
+  phoneNumberContainer: {
+   paddingBottom: 10,
+    paddingTop: 10,
+    paddingLeft: 5,
+    width: 400,
+    borderColor: 'grey',
+    marginLeft: 5,
+    marginRight: 5,
   },
 })
