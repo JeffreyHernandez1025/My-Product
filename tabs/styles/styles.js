@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
+
 
 export default StyleSheet.create({
   item: {
@@ -118,7 +119,7 @@ export default StyleSheet.create({
     fontSize: 10,
   },
   phoneNumberContainer: {
-   paddingBottom: 10,
+    paddingBottom: 10,
     paddingTop: 10,
     paddingLeft: 5,
     width: 400,
@@ -126,7 +127,8 @@ export default StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
   },
-  numbers: {
-   
-  }
+  map: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
 })
