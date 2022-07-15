@@ -3,22 +3,20 @@ import { StyleSheet, Text, View } from 'react-native'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Ionicons } from '@expo/vector-icons'
+// import { Ionicons } from '@expo/vector-icons'
 
 import Home from './tabs/Home'
 import Hours from './tabs/Hours'
 import Rewards from './tabs/Rewards'
 
-
 const Tabs = createBottomTabNavigator()
 
 export default function App() {
-  initialRouteName: 
-  return (
+  initialRouteName: return (
     <NavigationContainer>
       <Tabs.Navigator initialRouteName={'Home'}>
-       <Tabs.Screen name='Hour Tracker' component={Hours}  />
-       <Tabs.Screen name='Home' component={Home} />  
+        <Tabs.Screen name='Hour Tracker' component={Hours} />
+        <Tabs.Screen name='Home' component={Home} />
         <Tabs.Screen name='Rewards' component={Rewards} />
       </Tabs.Navigator>
     </NavigationContainer>

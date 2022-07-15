@@ -12,26 +12,41 @@ import {
   Pressable,
   Linking,
   TouchableOpacity,
-  TouchableHighlight
+  TouchableHighlight,
 } from 'react-native'
 import MapView, { Marker, AnimatedRegion } from 'react-native-maps'
 import React, { useState, useEffect } from 'react'
 import * as Location from 'expo-location'
-import reactNativeStopwatchTimer, { Timer } from 'react-native-stopwatch-timer'
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 
 import styles from './styles/styles'
 
 export default function Hours() {
- // Location
+  // Location
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
   // New Modal
   const [modalVisible, setModalVisible] = useState(false)
   // Timer
-  const [isTimerStart, setIsTimerStart] = useState(false)
-  const [timerDuration, setTimerDuration] = useState(90000)
-  const [resetTimer, setResetTimer] = useState(false)
- 
+  const [pause, setPause] = useState(false)
+
+  const timerFormat = ({ remainingTime }) => {
+    var hours = Math.floor(remainingTime / 3600)
+    var minutes = Math.floor((remainingTime % 3600) / 60)
+    var seconds = remainingTime % 60
+
+    if (hours < 10 && minutes < 10 && seconds < 10) {
+      return `${hours}:0${minutes}:0${seconds}`
+    }
+    if (hours < 10 && minutes > 10 && seconds < 10) {
+      return `${hours}:${minutes}:0${seconds}`
+    }
+    if (hours < 10 && minutes < 10 && seconds > 10) {
+      return `${hours}:0${minutes}:${seconds}`
+    }
+    return `${hours}:${minutes}:${seconds}`
+  }
+
   useEffect(() => {
     ;(async () => {
       let { status } = await Location.requestForegroundPermissionsAsync()
@@ -67,8 +82,7 @@ export default function Hours() {
             showsUserLocation={true}
             zoomEnabled={false}
             scrollEnabled={false}
-          >
-          </MapView>
+          ></MapView>
         )}
       </Pressable>
       <Modal
@@ -96,6 +110,35 @@ export default function Hours() {
       </Modal>
       <Text style={styles.info}> Beach Cleanups </Text>
       <Text style={styles.timerHeader}> Hour block: 30s </Text>
+      <View style={styles.timerContainer}>
+        <CountdownCircleTimer
+          duration={100}
+          onComplete={() => ({
+            shouldRepeat: true,
+          })}
+          colors={['green', 'red']}
+          isPlaying={pause}
+        >
+          {({ remainingTime, color }) => (
+            <Text style={{ color, fontSize: 40 }}>
+              {/* {remainingTime} */}
+              {timerFormat({ remainingTime })}
+            </Text>
+          )}
+        </CountdownCircleTimer>
+        <Button
+          title='Start'
+          onPress={() => {
+            setPause(true)
+          }}
+        />
+        <Button
+          title='Pause'
+          onPress={() => {
+            setPause(false)
+          }}
+        />
+      </View>
     </View>
   )
 }
