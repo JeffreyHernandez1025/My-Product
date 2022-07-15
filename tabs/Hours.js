@@ -12,19 +12,26 @@ import {
   Pressable,
   Linking,
   TouchableOpacity,
+  TouchableHighlight
 } from 'react-native'
-import MapView, { Marker } from 'react-native-maps'
+import MapView, { Marker, AnimatedRegion } from 'react-native-maps'
 import React, { useState, useEffect } from 'react'
 import * as Location from 'expo-location'
+import reactNativeStopwatchTimer, { Timer } from 'react-native-stopwatch-timer'
 
 import styles from './styles/styles'
 
 export default function Hours() {
+ // Location
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
+  // New Modal
   const [modalVisible, setModalVisible] = useState(false)
-
-
+  // Timer
+  const [isTimerStart, setIsTimerStart] = useState(false)
+  const [timerDuration, setTimerDuration] = useState(90000)
+  const [resetTimer, setResetTimer] = useState(false)
+ 
   useEffect(() => {
     ;(async () => {
       let { status } = await Location.requestForegroundPermissionsAsync()
@@ -57,16 +64,10 @@ export default function Hours() {
             }}
             style={styles.map}
             followsUserLocation={true}
-            zoomEnabled={true}
+            showsUserLocation={true}
+            zoomEnabled={false}
+            scrollEnabled={false}
           >
-            <Marker
-              style={styles.marker}
-              coordinate={{
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
-              }}
-              image={require('../assets/marker.png')}
-            />
           </MapView>
         )}
       </Pressable>
@@ -84,23 +85,17 @@ export default function Hours() {
               longitude: location.coords.longitude,
             }}
             style={styles.map2}
+            followsUserLocation={true}
+            showsUserLocation={true}
           >
             <Pressable onPress={() => setModalVisible(!modalVisible)}>
               <Text style={styles.back}> X </Text>
             </Pressable>
-            <Marker
-              style={styles.marker}
-              coordinate={{
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
-              }}
-              image={require('../assets/marker.png')}
-            />
           </MapView>
         )}
       </Modal>
-      <Text style={styles.info}> Volunteering at Beach Cleanups </Text>
-      <Text style={styles.timerHeader}> Timer </Text>
+      <Text style={styles.info}> Beach Cleanups </Text>
+      <Text style={styles.timerHeader}> Hour block: 30s </Text>
     </View>
   )
 }
