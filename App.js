@@ -13,10 +13,11 @@ import Rewards from './tabs/Rewards'
 const Tabs = createBottomTabNavigator()
 
 export default function App() {
+  initialRouteName: 
   return (
     <NavigationContainer>
-      <Tabs.Navigator>
-       <Tabs.Screen name='Hours' component={Hours} />
+      <Tabs.Navigator initialRouteName={'Home'}>
+       <Tabs.Screen name='Hour Tracker' component={Hours}  />
        <Tabs.Screen name='Home' component={Home} />  
         <Tabs.Screen name='Rewards' component={Rewards} />
       </Tabs.Navigator>

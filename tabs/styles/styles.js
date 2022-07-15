@@ -1,6 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native'
 
-
 export default StyleSheet.create({
   item: {
     backgroundColor: '#f9c2ff',
@@ -128,6 +127,44 @@ export default StyleSheet.create({
     marginRight: 5,
   },
   map: {
+    width: 397,
+    height: 221,
+    marginLeft: 8,
+    marginRight: 5,
+  },
+  mapHeader: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    fontSize: 20,
+    marginLeft: 8,
+    fontWeight: 'bold',
+  },
+  info: {
+    marginLeft: 8,
+    marginRight: 5,
+    backgroundColor: 'grey',
+    fontWeight: 'bold',
+    fontSize: 11,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 5,
+  },
+  timerHeader: {
+    textAlign: 'center',
+    marginTop: 30,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  back: {
+    textAlign: 'left',
+    marginTop: 50,
+    width: 26,
+    marginHorizontal: 5,
+    marginBottom: 10,
+    fontSize: 30,
+    color: 'grey',
+  },
+  map2: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },

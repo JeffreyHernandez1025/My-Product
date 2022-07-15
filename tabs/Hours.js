@@ -22,6 +22,8 @@ import styles from './styles/styles'
 export default function Hours() {
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
+  const [modalVisible, setModalVisible] = useState(false)
+
 
   useEffect(() => {
     ;(async () => {
@@ -45,23 +47,60 @@ export default function Hours() {
   }
   return (
     <View>
-      {location === null ? null : (
-        <MapView
-          initialRegion={{
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          }}
-          style={styles.map}
-        >
-          <Marker
-            coordinate={{
+      <Text style={styles.mapHeader}> Location </Text>
+      <Pressable onPress={() => setModalVisible(true)}>
+        {location === null ? null : (
+          <MapView
+            initialRegion={{
               latitude: location.coords.latitude,
               longitude: location.coords.longitude,
             }}
-            // image={require('../assets/marker.png')}
-          />
-        </MapView>
-      )}
+            style={styles.map}
+            followsUserLocation={true}
+            zoomEnabled={true}
+          >
+            <Marker
+              style={styles.marker}
+              coordinate={{
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+              }}
+              image={require('../assets/marker.png')}
+            />
+          </MapView>
+        )}
+      </Pressable>
+      <Modal
+        animationType='slide'
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.')(!modalVisible)
+        }}
+      >
+        {location === null ? null : (
+          <MapView
+            initialRegion={{
+              latitude: location.coords.latitude,
+              longitude: location.coords.longitude,
+            }}
+            style={styles.map2}
+          >
+            <Pressable onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.back}> X </Text>
+            </Pressable>
+            <Marker
+              style={styles.marker}
+              coordinate={{
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+              }}
+              image={require('../assets/marker.png')}
+            />
+          </MapView>
+        )}
+      </Modal>
+      <Text style={styles.info}> Volunteering at Beach Cleanups </Text>
+      <Text style={styles.timerHeader}> Timer </Text>
     </View>
   )
 }

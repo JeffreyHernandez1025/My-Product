@@ -98,7 +98,6 @@ export default function Home() {
         data={opportunities}
         renderItem={({ item }) => (
           <Pressable
-            style={[styles.button, styles.buttonClose]}
             onPress={() => setModalVisible(true)}
           >
             <Text style={styles.item} on>
