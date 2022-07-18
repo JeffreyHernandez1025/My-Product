@@ -2,10 +2,11 @@ import { StyleSheet, Dimensions } from 'react-native'
 
 export default StyleSheet.create({
   item: {
-    backgroundColor: '#f9c2ff',
-    padding: 40,
-    marginVertical: 8,
+   marginTop: 5,
+   marginBottom: 5,
     marginHorizontal: 16,
+    fontSize: 11,
+    fontWeight: 'bold',
   },
   title: {
     fontSize: 40,
@@ -206,4 +207,26 @@ export default StyleSheet.create({
     flexDirection: 'row',
     marginLeft: 75,
   },
+  image: {
+    height: 138,
+    width: 209,
+  },
+  itemContainer: {
+    marginRight: 20,
+    marginLeft: 10,
+    backgroundColor: 'grey',
+    borderRadius: 10,
+    overflow: 'hidden',
+
+  },
+  add: {
+   fontSize: 11,
+   marginLeft: 12,
+   flexShrink: 1,
+   flexWrap: 'wrap',
+  },
+  block: {
+   fontSize: 11,
+   marginLeft: 10,
+  }
 })
