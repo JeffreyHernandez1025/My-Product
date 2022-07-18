@@ -38,10 +38,10 @@ export default function Hours() {
     if (hours < 10 && minutes < 10 && seconds < 10) {
       return `${hours}:0${minutes}:0${seconds}`
     }
-    if (hours < 10 && minutes > 10 && seconds < 10) {
+    if (hours < 10 && minutes >= 10 && seconds < 10) {
       return `${hours}:${minutes}:0${seconds}`
     }
-    if (hours < 10 && minutes < 10 && seconds > 10) {
+    if (hours < 10 && minutes < 10 && seconds >= 10) {
       return `${hours}:0${minutes}:${seconds}`
     }
     return `${hours}:${minutes}:${seconds}`
@@ -101,6 +101,7 @@ export default function Hours() {
             style={styles.map2}
             followsUserLocation={true}
             showsUserLocation={true}
+            showsMyLocationButton={true}
           >
             <Pressable onPress={() => setModalVisible(!modalVisible)}>
               <Text style={styles.back}> X </Text>
@@ -109,10 +110,10 @@ export default function Hours() {
         )}
       </Modal>
       <Text style={styles.info}> Beach Cleanups </Text>
-      <Text style={styles.timerHeader}> Hour block: 30s </Text>
+      <Text style={styles.timerHeader}> Hour block: 1 hr </Text>
       <View style={styles.timerContainer}>
         <CountdownCircleTimer
-          duration={100}
+          duration={4300}
           onComplete={() => ({
             shouldRepeat: true,
           })}
@@ -120,24 +121,33 @@ export default function Hours() {
           isPlaying={pause}
         >
           {({ remainingTime, color }) => (
-            <Text style={{ color, fontSize: 40 }}>
+            <Text style={styles.timer}>
               {/* {remainingTime} */}
               {timerFormat({ remainingTime })}
             </Text>
           )}
         </CountdownCircleTimer>
-        <Button
-          title='Start'
-          onPress={() => {
-            setPause(true)
-          }}
-        />
-        <Button
-          title='Pause'
+      </View>
+      <View style={styles.timerButtons}>
+        <Text
           onPress={() => {
             setPause(false)
           }}
-        />
+          style={styles.pause}
+        >
+          {' '}
+          Pause{' '}
+        </Text>
+        <Text
+          onPress={() => {
+            setPause(true)
+          }}
+          style={styles.start}
+        >
+          {' '}
+          Start{' '}
+        </Text>
+        
       </View>
     </View>
   )

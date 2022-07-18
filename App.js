@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Image } from 'react-native'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -15,9 +15,40 @@ export default function App() {
   initialRouteName: return (
     <NavigationContainer>
       <Tabs.Navigator initialRouteName={'Home'}>
-        <Tabs.Screen name='Hour Tracker' component={Hours} />
-        <Tabs.Screen name='Home' component={Home} />
-        <Tabs.Screen name='Rewards' component={Rewards} />
+        <Tabs.Screen
+          name='Hour Tracker'
+          component={Hours}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Image
+                style={styles.bottomTabIcon}
+                source={require('./assets/clockIcon.png')}
+              />
+            ),
+            tabBarLabel: 'Home',
+          }}
+        />
+        <Tabs.Screen
+          name='Home'
+          component={Home}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Image
+                style={styles.bottomTabIcon}
+                source={require('./assets/homeIcon.png')}
+              />
+            ),
+            tabBarLabel: 'Home',
+          }}
+        />
+        <Tabs.Screen name='Rewards' component={Rewards} options={{tabBarIcon: ({ color }) => (
+              <Image
+                style={styles.bottomTabIcon}
+                source={require('./assets/rewardIcon.png')}
+              />
+            ),
+            tabBarLabel: 'Home',
+          }}/>
       </Tabs.Navigator>
     </NavigationContainer>
   )

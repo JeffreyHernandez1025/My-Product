@@ -142,7 +142,7 @@ export default StyleSheet.create({
   info: {
     fontWeight: 'bold',
     fontSize: 17,
-    marginTop: 32,
+    marginTop: 20,
     textAlign: 'center',
   },
   timerHeader: {
@@ -161,5 +161,49 @@ export default StyleSheet.create({
   map2: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+  },
+  timer: {
+    color: 'black',
+    fontSize: 40,
+  },
+  timerContainer: {
+    marginLeft: 120,
+    marginTop: 30,
+  },
+  start: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginLeft: 5,
+    marginTop: 75,
+    backgroundColor: 'grey',
+    width: 125,
+    height: 50,
+    textAlign: 'center',
+    paddingTop: 13,
+    paddingRight: 5,
+    borderRadius: 5,
+    borderWidth: 1,
+    overflow: 'hidden',
+    borderColor: 'grey',
+  },
+  pause: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginRight: 10,
+    marginTop: 75,
+    backgroundColor: 'grey',
+    width: 125,
+    height: 50,
+    textAlign: 'center',
+    paddingTop: 12,
+    paddingRight: 5,
+    borderRadius: 5,
+    borderWidth: 1,
+    overflow: 'hidden',
+    borderColor: 'grey',
+  },
+  timerButtons: {
+    flexDirection: 'row',
+    marginLeft: 75,
   },
 })
