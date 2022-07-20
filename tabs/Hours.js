@@ -15,20 +15,31 @@ import {
   TouchableHighlight,
 } from 'react-native'
 import MapView, { Marker, AnimatedRegion } from 'react-native-maps'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import * as Location from 'expo-location'
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
+import BottomSheet from '@gorhom/bottom-sheet';
 
 import styles from './styles/styles'
+
+const TAB_BAR_HEIGHT = 49;
 
 export default function Hours() {
   // Location
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
-  // New Modal
-  const [modalVisible, setModalVisible] = useState(false)
   // Timer
   const [pause, setPause] = useState(false)
+
+const bottomSheetRef = useRef (null)
+
+// variables
+const snapPoints = useMemo(() => ['25%', '50%'], [])
+
+// callbacks
+const handleSheetChanges = useCallback((index) => {
+  console.log('handleSheetChanges', index)
+}, [])
 
   const timerFormat = ({ remainingTime }) => {
     var hours = Math.floor(remainingTime / 3600)
@@ -57,7 +68,6 @@ export default function Hours() {
 
       let location = await Location.getCurrentPositionAsync({})
       setLocation(location)
-      console.log(location)
     })()
   }, [])
 
@@ -69,86 +79,63 @@ export default function Hours() {
   }
   return (
     <View>
-      <Text style={styles.mapHeader}> Location </Text>
-      <Pressable onPress={() => setModalVisible(true)}>
-        {location === null ? null : (
-          <MapView
-            initialRegion={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-            }}
-            style={styles.map}
-            followsUserLocation={true}
-            showsUserLocation={true}
-            zoomEnabled={false}
-            scrollEnabled={false}
-          ></MapView>
-        )}
-      </Pressable>
-      <Modal
-        animationType='slide'
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.')(!modalVisible)
-        }}
+      {location === null ? null : (
+        <MapView
+          initialRegion={{
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          }}
+          style={styles.map}
+          followsUserLocation={true}
+          showsUserLocation={true}
+        ></MapView>
+      )}
+      <BottomSheet
+        ref={bottomSheetRef}
+        index={1}
+        snapPoints={snapPoints}
+        onChange={handleSheetChanges}
       >
-        {location === null ? null : (
-          <MapView
-            initialRegion={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-            }}
-            style={styles.map2}
-            followsUserLocation={true}
-            showsUserLocation={true}
-            showsMyLocationButton={true}
+        <Text style={styles.info}> Beach Cleanups </Text>
+        <Text style={styles.timerHeader}> Hour block: 1 hr </Text>
+        <View style={styles.timerContainer}>
+          <CountdownCircleTimer
+            duration={4300}
+            onComplete={() => ({
+              shouldRepeat: true,
+            })}
+            colors={['green', 'red']}
+            isPlaying={pause}
           >
-            <Pressable onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.back}> X </Text>
-            </Pressable>
-          </MapView>
-        )}
-      </Modal>
-      <Text style={styles.info}> Beach Cleanups </Text>
-      <Text style={styles.timerHeader}> Hour block: 1 hr </Text>
-      <View style={styles.timerContainer}>
-        <CountdownCircleTimer
-          duration={4300}
-          onComplete={() => ({
-            shouldRepeat: true,
-          })}
-          colors={['green', 'red']}
-          isPlaying={pause}
-        >
-          {({ remainingTime, color }) => (
-            <Text style={styles.timer}>
-              {/* {remainingTime} */}
-              {timerFormat({ remainingTime })}
-            </Text>
-          )}
-        </CountdownCircleTimer>
-      </View>
-      <View style={styles.timerButtons}>
-        <Text
-          onPress={() => {
-            setPause(false)
-          }}
-          style={styles.pause}
-        >
-          {' '}
-          Pause{' '}
-        </Text>
-        <Text
-          onPress={() => {
-            setPause(true)
-          }}
-          style={styles.start}
-        >
-          {' '}
-          Start{' '}
-        </Text>
-        
-      </View>
+            {({ remainingTime, color }) => (
+              <Text style={styles.timer}>
+                {/* {remainingTime} */}
+                {timerFormat({ remainingTime })}
+              </Text>
+            )}
+          </CountdownCircleTimer>
+        </View>
+        <View style={styles.timerButtons}>
+          <Text
+            onPress={() => {
+              setPause(false)
+            }}
+            style={styles.pause}
+          >
+            {' '}
+            Pause{' '}
+          </Text>
+          <Text
+            onPress={() => {
+              setPause(true)
+            }}
+            style={styles.start}
+          >
+            {' '}
+            Start{' '}
+          </Text>
+        </View>
+      </BottomSheet>
     </View>
   )
 }
