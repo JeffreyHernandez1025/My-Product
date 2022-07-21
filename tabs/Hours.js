@@ -13,75 +13,81 @@ import {
   Linking,
   TouchableOpacity,
   TouchableHighlight,
-} from 'react-native'
-import MapView, { Marker, AnimatedRegion } from 'react-native-maps'
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
-import * as Location from 'expo-location'
-import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
-import BottomSheet from '@gorhom/bottom-sheet'
-import Notification from '../components/notification'
+} from "react-native";
+import MapView, { Marker, AnimatedRegion } from "react-native-maps";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+} from "react";
+import * as Location from "expo-location";
+import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
+import BottomSheet from "@gorhom/bottom-sheet";
+import Notification from "../components/notification";
 
-import styles from './styles/styles'
+import styles from "./styles/styles";
 
-const TAB_BAR_HEIGHT = 49
+const TAB_BAR_HEIGHT = 49;
 
-const Play = require('../assets/Play.png')
-const Pause = require('../assets/Pause.png')
+const Play = require("../assets/Play.png");
+const Pause = require("../assets/Pause.png");
 export default function Hours() {
   // alert
-  const [showNotification, setShowNotification] = useState(false)
+  const [showNotification, setShowNotification] = useState(false);
   // Location
-  const [location, setLocation] = useState(null)
-  const [errorMsg, setErrorMsg] = useState(null)
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
   // Timer
-  const [pause, setPause] = useState(false)
-  const [placeHolder, setPlaceHolder] = useState(Pause)
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [placeHolder, setPlaceHolder] = useState(Play);
 
-  const bottomSheetRef = useRef(null)
+  const bottomSheetRef = useRef(null);
 
   // variables
-  const snapPoints = useMemo(() => ['5%', '50%'], [])
+  const snapPoints = useMemo(() => ["5%", "50%"], []);
 
   // callbacks
   const handleSheetChanges = useCallback((index) => {
-    console.log('handleSheetChanges', index)
-  }, [])
+    console.log("handleSheetChanges", index);
+  }, []);
 
   const timerFormat = ({ remainingTime }) => {
-    var hours = Math.floor(remainingTime / 3600)
-    var minutes = Math.floor((remainingTime % 3600) / 60)
-    var seconds = remainingTime % 60
+    var hours = Math.floor(remainingTime / 3600);
+    var minutes = Math.floor((remainingTime % 3600) / 60);
+    var seconds = remainingTime % 60;
 
     if (hours < 10 && minutes < 10 && seconds < 10) {
-      return `${hours}:0${minutes}:0${seconds}`
+      return `${hours}:0${minutes}:0${seconds}`;
     }
     if (hours < 10 && minutes >= 10 && seconds < 10) {
-      return `${hours}:${minutes}:0${seconds}`
+      return `${hours}:${minutes}:0${seconds}`;
     }
     if (hours < 10 && minutes < 10 && seconds >= 10) {
-      return `${hours}:0${minutes}:${seconds}`
+      return `${hours}:0${minutes}:${seconds}`;
     }
-    return `${hours}:${minutes}:${seconds}`
-  }
+    return `${hours}:${minutes}:${seconds}`;
+  };
 
   useEffect(() => {
-    ;(async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync()
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied')
-        return
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
       }
 
-      let location = await Location.getCurrentPositionAsync({})
-      setLocation(location)
-    })()
-  }, [])
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
 
-  let text = 'Waiting..'
+  let text = "Waiting..";
   if (errorMsg) {
-    text = errorMsg
+    text = errorMsg;
   } else if (location) {
-    text = JSON.stringify(location)
+    text = JSON.stringify(location);
   }
   return (
     <View style={{ flex: 1 }}>
@@ -111,16 +117,19 @@ export default function Hours() {
           <Text style={styles.timerHeader}> Hour block: 1 hr </Text>
           <View style={styles.timerContainer}>
             <CountdownCircleTimer
-              duration={10}
+              key={`${showNotification}${new Date().getTime}`}
+              duration={3}
               onComplete={() => {
-                setShowNotification(true)
+                setShowNotification(true);
+                setIsPlaying(false)
+                setPlaceHolder(Play)
                 return {
                   shouldRepeat: false,
-                }
+                };
               }}
-              colors={['mediumspringgreen', 'red']}
-              isPlaying={pause}
-              style={{ justifyContent: 'center' }}
+              colors={["mediumspringgreen", "red"]}
+              isPlaying={isPlaying}
+              style={{ justifyContent: "center" }}
             >
               {({ remainingTime, color }) => (
                 <Text style={styles.timer}>
@@ -132,11 +141,13 @@ export default function Hours() {
           <View style={styles.timerButtons}>
             <TouchableOpacity
               onPress={() => {
-                setPause((prev) => !prev)
+                setIsPlaying(!isPlaying);
+             
                 if (placeHolder === Pause) {
-                  setPlaceHolder(Play)
+                  setPlaceHolder(Play);
                 } else {
-                  setPlaceHolder(Pause)
+                  setPlaceHolder(Pause);
+                  setShowNotification(false);
                 }
               }}
             >
@@ -148,5 +159,5 @@ export default function Hours() {
         </View>
       </BottomSheet>
     </View>
-  )
+  );
 }
