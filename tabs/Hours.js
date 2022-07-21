@@ -91,7 +91,9 @@ export default function Hours() {
   }
   return (
     <View style={{ flex: 1 }}>
-      {showNotification === true ? <Notification /> : null}
+      {showNotification === true ? (
+        <Notification setShowNotification = {setShowNotification} />
+      ) : null}
       {location === null ? null : (
         <MapView
           initialRegion={{
@@ -120,16 +122,16 @@ export default function Hours() {
               key={`${showNotification}${new Date().getTime}`}
               duration={3}
               onComplete={() => {
-                setShowNotification(true);
+                setShowNotification(true)
                 setIsPlaying(false)
                 setPlaceHolder(Play)
                 return {
                   shouldRepeat: false,
-                };
+                }
               }}
-              colors={["mediumspringgreen", "red"]}
+              colors={['mediumspringgreen', 'red']}
               isPlaying={isPlaying}
-              style={{ justifyContent: "center" }}
+              style={{ justifyContent: 'center' }}
             >
               {({ remainingTime, color }) => (
                 <Text style={styles.timer}>
@@ -141,13 +143,13 @@ export default function Hours() {
           <View style={styles.timerButtons}>
             <TouchableOpacity
               onPress={() => {
-                setIsPlaying(!isPlaying);
-             
+                setIsPlaying(!isPlaying)
+
                 if (placeHolder === Pause) {
-                  setPlaceHolder(Play);
+                  setPlaceHolder(Play)
                 } else {
-                  setPlaceHolder(Pause);
-                  setShowNotification(false);
+                  setPlaceHolder(Pause)
+                  setShowNotification(false)
                 }
               }}
             >
@@ -159,5 +161,5 @@ export default function Hours() {
         </View>
       </BottomSheet>
     </View>
-  );
+  )
 }

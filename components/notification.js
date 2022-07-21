@@ -15,10 +15,11 @@ import {
   ScrollView,
 } from 'react-native'
 import React, { useState, useCallback, Children } from 'react'
+import { Entypo } from '@expo/vector-icons' 
 
 const Logo = require('../assets/TCBlogo.png')
 
-export default function Notification() {
+export default function Notification({setShowNotification}) {
   return (
     <View
       style={{
@@ -26,7 +27,7 @@ export default function Notification() {
         backgroundColor: '#48C7C6',
         position: 'absolute',
         zIndex: 2,
-        top: 20,
+        top: 35,
         width: 393,
         height: 100,
         alignSelf: 'center',
@@ -46,13 +47,20 @@ export default function Notification() {
       >
         <Image style={{ width: 42, height: 37 }} source={Logo} />
       </View>
-      <View style={{flexDirection: 'column'}}>
-        <Text style={{ fontSize: 15, color: 'white', fontWeight: 'bold' }}>
+      <View style={{ flex: 1, flexDirection: 'column', padding: 10, alignSelf: 'center' }}>
+        <Text style={{ fontSize: 15, color: 'white', fontWeight: 'bold', paddingBottom: 5, }}>
           The Service Cube
         </Text>
-        <Text>
+        <Text style={{color: 'white', fontSize: 15 }} >
           You have completed your Hour Block! You have recieved 60 Cube Points!
         </Text>
+      </View>
+      <View style={{width: 25, hieght: 20,}}>
+        <TouchableOpacity style={{ alignSelf: 'right' }} onPress={() =>{
+         setShowNotification(false)
+        }}>
+          <Entypo name='cross' size={24} color='black' />
+        </TouchableOpacity>
       </View>
     </View>
   )

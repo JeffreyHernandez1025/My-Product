@@ -210,6 +210,9 @@ export default StyleSheet.create({
   pointsName: {
    fontSize: 20,
    textAlign: 'center',
-   
   },
+  Tabs: {
+   fontSize: 20,
+   
+  }
 })

@@ -52,8 +52,10 @@ export default function Rewards() {
               padding: 10,
               marginVertical: 10,
               borderRadius: 20,
+              flexDirection: 'row',
             }}
           >
+           <Image style={{width: 20, height: 20,}} source={require('../assets/Search.png')} />
             <TextInput
               autoCapitalize='none'
               autoCorrect={false}
@@ -62,11 +64,17 @@ export default function Rewards() {
               onChangeText={(queryText) => handleSearch(queryText)}
               placeholder='Search'
               inlineImageLeft='../assets/Search.png'
-              style={{ backgroundColor: '#fff', paddingHorizontal: 20 }}
+              style={{ backgroundColor: '#fff', paddingHorizontal: 0 }}
             />
           </View>
         }
       />
+      <View style={{flexDirection: 'row'}}>
+       <View>
+       <Text style={styles.Tabs}> Gift Cards </Text>
+       </View>
+       </View> 
     </View>
   )
 }
+
