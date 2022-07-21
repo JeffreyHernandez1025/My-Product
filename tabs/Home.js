@@ -17,6 +17,7 @@ import {
 import React, { useState, useCallback, Children } from "react";
 import styles from "./styles/styles";
 import filter from "lodash.filter";
+import DropShadow from "react-native-drop-shadow";
 
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -88,7 +89,7 @@ export default function Home() {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, marginTop: 50, }}>
       <ScrollView>
         <FlatList
           ListHeaderComponent={
@@ -119,6 +120,7 @@ export default function Home() {
             data={opportunities}
             renderItem={({ item }) => (
               <Pressable onPress={() => setModalVisible(true)}>
+                <DropShadow style={styles.shadowProp}> 
                 <View style={styles.itemContainer}>
                   <Image
                     style={styles.image}
@@ -127,13 +129,14 @@ export default function Home() {
                     }}
                   />
                   <View style={styles.TextContainer}>
-                    <Text style={styles.item} on>
+                    <Text style={styles.item} >
                       {item.opportunity}
                     </Text>
                     <Text style={styles.add}>{item.info}</Text>
                     <Text style={styles.block}>{item.vb}</Text>
                   </View>
                 </View>
+                </DropShadow>
               </Pressable>
             )}
             keyExtractor={(item) => item.id}
@@ -147,6 +150,7 @@ export default function Home() {
             data={opportunities}
             renderItem={({ item }) => (
               <Pressable onPress={() => setModalVisible(true)}>
+                <DropShadow style={styles.shadowProp} > 
                 <View style={styles.itemContainer}>
                   <Image
                     style={styles.image}
@@ -155,13 +159,14 @@ export default function Home() {
                     }}
                   />
                   <View style={styles.TextContainer}>
-                    <Text style={styles.item} on>
+                    <Text style={styles.item} >
                       {item.opportunity}
                     </Text>
                     <Text style={styles.add}>{item.info}</Text>
                     <Text style={styles.block}>{item.vb}</Text>
                   </View>
-                </View>
+                </View> 
+                </DropShadow>
               </Pressable>
             )}
             keyExtractor={(item) => item.id}
@@ -175,6 +180,7 @@ export default function Home() {
             data={opportunities}
             renderItem={({ item }) => (
               <Pressable onPress={() => setModalVisible(true)}>
+                <DropShadow style={styles.shadowProp}>
                 <View style={styles.itemContainer}>
                   <Image
                     style={styles.image}
@@ -183,13 +189,14 @@ export default function Home() {
                     }}
                   />
                   <View style={styles.TextContainer}>
-                    <Text style={styles.item} on>
+                    <Text style={styles.item} >
                       {item.opportunity}
                     </Text>
                     <Text style={styles.add}>{item.info}</Text>
                     <Text style={styles.block}>{item.vb}</Text>
                   </View>
                 </View>
+                </DropShadow>
               </Pressable>
             )}
             keyExtractor={(item) => item.id}
@@ -203,6 +210,7 @@ export default function Home() {
             data={opportunities}
             renderItem={({ item }) => (
               <Pressable onPress={() => setModalVisible(true)}>
+                <DropShadow style={styles.shadowProp}> 
                 <View style={styles.itemContainer}>
                   <Image
                     style={styles.image}
@@ -211,13 +219,14 @@ export default function Home() {
                     }}
                   />
                   <View style={styles.TextContainer}>
-                    <Text style={styles.item} on>
+                    <Text style={styles.item} >
                       {item.opportunity}
                     </Text>
                     <Text style={styles.add}>{item.info}</Text>
                     <Text style={styles.block}>{item.vb}</Text>
                   </View>
                 </View>
+                </DropShadow>
               </Pressable>
             )}
             keyExtractor={(item) => item.id}

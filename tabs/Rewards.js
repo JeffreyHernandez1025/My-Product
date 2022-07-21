@@ -13,11 +13,60 @@ import {
   Linking,
   TouchableOpacity,
 } from 'react-native'
+import React, { useState, useCallback, Children } from 'react'
+
+import styles from './styles/styles'
 
 export default function Rewards() {
+  // Search bar feature
+  const [query, setQuery] = useState('')
+
+  const handleSearch = (text) => {
+    const formattedQuery = text.toLowerCase()
+    const filteredOpportunities = filter(opportunities, (user) => {
+      return contains(user, formattedQuery)
+    })
+    setOpportunities(filteredOpportunities)
+    setQuery(text)
+  }
+
+  const contains = ({ opportunity }, query) => {
+    const { name } = opportunity
+
+    if (name.includes(query)) {
+      return true
+    }
+
+    return false
+  }
   return (
     <View>
-      <Text> Hello from Rewards! </Text>
+      <Text style={styles.rewardsTitle}> Rewards </Text>
+      <Text style={styles.points}> 1080 </Text>
+      <Text style={styles.pointsName}> Cube points </Text>
+      <FlatList
+        ListHeaderComponent={
+          <View
+            style={{
+              backgroundColor: '#fff',
+              padding: 10,
+              marginVertical: 10,
+              borderRadius: 20,
+            }}
+          >
+            <TextInput
+              autoCapitalize='none'
+              autoCorrect={false}
+              clearButtonMode='always'
+              value={query}
+              onChangeText={(queryText) => handleSearch(queryText)}
+              placeholder='Search'
+              inlineImageLeft='../assets/Search.png'
+              style={{ backgroundColor: '#fff', paddingHorizontal: 20 }}
+            />
+          </View>
+        }
+      />
     </View>
   )
 }

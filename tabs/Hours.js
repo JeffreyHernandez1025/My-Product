@@ -18,28 +18,34 @@ import MapView, { Marker, AnimatedRegion } from 'react-native-maps'
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import * as Location from 'expo-location'
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet'
+import Notification from '../components/notification'
 
 import styles from './styles/styles'
 
-const TAB_BAR_HEIGHT = 49;
+const TAB_BAR_HEIGHT = 49
 
+const Play = require('../assets/Play.png')
+const Pause = require('../assets/Pause.png')
 export default function Hours() {
+  // alert
+  const [showNotification, setShowNotification] = useState(false)
   // Location
   const [location, setLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
   // Timer
   const [pause, setPause] = useState(false)
+  const [placeHolder, setPlaceHolder] = useState(Pause)
 
-const bottomSheetRef = useRef (null)
+  const bottomSheetRef = useRef(null)
 
-// variables
-const snapPoints = useMemo(() => ['25%', '50%'], [])
+  // variables
+  const snapPoints = useMemo(() => ['5%', '50%'], [])
 
-// callbacks
-const handleSheetChanges = useCallback((index) => {
-  console.log('handleSheetChanges', index)
-}, [])
+  // callbacks
+  const handleSheetChanges = useCallback((index) => {
+    console.log('handleSheetChanges', index)
+  }, [])
 
   const timerFormat = ({ remainingTime }) => {
     var hours = Math.floor(remainingTime / 3600)
@@ -78,16 +84,19 @@ const handleSheetChanges = useCallback((index) => {
     text = JSON.stringify(location)
   }
   return (
-    <View>
+    <View style={{ flex: 1 }}>
+      {showNotification === true ? <Notification /> : null}
       {location === null ? null : (
         <MapView
           initialRegion={{
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
           }}
           style={styles.map}
-          followsUserLocation={true}
           showsUserLocation={true}
+          followsUserLocation={true}
         ></MapView>
       )}
       <BottomSheet
@@ -96,44 +105,46 @@ const handleSheetChanges = useCallback((index) => {
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
       >
-        <Text style={styles.info}> Beach Cleanups </Text>
-        <Text style={styles.timerHeader}> Hour block: 1 hr </Text>
-        <View style={styles.timerContainer}>
-          <CountdownCircleTimer
-            duration={4300}
-            onComplete={() => ({
-              shouldRepeat: true,
-            })}
-            colors={['green', 'red']}
-            isPlaying={pause}
-          >
-            {({ remainingTime, color }) => (
-              <Text style={styles.timer}>
-                {/* {remainingTime} */}
-                {timerFormat({ remainingTime })}
-              </Text>
-            )}
-          </CountdownCircleTimer>
-        </View>
-        <View style={styles.timerButtons}>
-          <Text
-            onPress={() => {
-              setPause(false)
-            }}
-            style={styles.pause}
-          >
-            {' '}
-            Pause{' '}
-          </Text>
-          <Text
-            onPress={() => {
-              setPause(true)
-            }}
-            style={styles.start}
-          >
-            {' '}
-            Start{' '}
-          </Text>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.info}> Hour Tracker </Text>
+          <Text style={styles.timerHeader}> Beach Cleaning </Text>
+          <Text style={styles.timerHeader}> Hour block: 1 hr </Text>
+          <View style={styles.timerContainer}>
+            <CountdownCircleTimer
+              duration={10}
+              onComplete={() => {
+                setShowNotification(true)
+                return {
+                  shouldRepeat: false,
+                }
+              }}
+              colors={['mediumspringgreen', 'red']}
+              isPlaying={pause}
+              style={{ justifyContent: 'center' }}
+            >
+              {({ remainingTime, color }) => (
+                <Text style={styles.timer}>
+                  {timerFormat({ remainingTime })}
+                </Text>
+              )}
+            </CountdownCircleTimer>
+          </View>
+          <View style={styles.timerButtons}>
+            <TouchableOpacity
+              onPress={() => {
+                setPause((prev) => !prev)
+                if (placeHolder === Pause) {
+                  setPlaceHolder(Play)
+                } else {
+                  setPlaceHolder(Pause)
+                }
+              }}
+            >
+              <Image style={{ width: 63, height: 63 }} source={placeHolder} />
+              {/* <Image source = {uri: variableName} /> */}
+              {/* within image tag set source = {uri: variableName} */}
+            </TouchableOpacity>
+          </View>
         </View>
       </BottomSheet>
     </View>

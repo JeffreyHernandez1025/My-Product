@@ -1,6 +1,9 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions } from 'react-native'
+import { block } from 'react-native-reanimated'
 
 export default StyleSheet.create({
+  // Home Tab
+
   item: {
     marginTop: 5,
     marginBottom: 4,
@@ -127,64 +130,6 @@ export default StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
   },
-  map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  },
-  info: {
-    fontWeight: 'bold',
-    fontSize: 17,
-    marginTop: 20,
-    textAlign: 'center',
-  },
-  timerHeader: {
-    textAlign: 'center',
-    fontSize: 12,
-  },
-  timer: {
-    color: 'black',
-    fontSize: 40,
-  },
-  timerContainer: {
-    marginLeft: 120,
-    marginTop: 30,
-  },
-  start: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginLeft: 5,
-    marginTop: 75,
-    backgroundColor: 'grey',
-    width: 125,
-    height: 50,
-    textAlign: 'center',
-    paddingTop: 13,
-    paddingRight: 5,
-    borderRadius: 5,
-    borderWidth: 1,
-    overflow: 'hidden',
-    borderColor: 'grey',
-  },
-  pause: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginRight: 10,
-    marginTop: 75,
-    backgroundColor: 'grey',
-    width: 125,
-    height: 50,
-    textAlign: 'center',
-    paddingTop: 12,
-    paddingRight: 5,
-    borderRadius: 5,
-    borderWidth: 1,
-    overflow: 'hidden',
-    borderColor: 'grey',
-  },
-  timerButtons: {
-    flexDirection: 'row',
-    marginLeft: 75,
-  },
   image: {
     height: 138,
     width: '100%',
@@ -196,6 +141,12 @@ export default StyleSheet.create({
     borderRadius: 10,
     overflow: 'hidden',
     width: 209,
+  },
+  shadowProp: {
+    shadowColor: '#171717',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   },
   add: {
     fontSize: 11,
@@ -209,5 +160,56 @@ export default StyleSheet.create({
     width: '100%',
     height: 75,
     paddingHorizontal: 12,
+  },
+
+  // Hour Tab
+
+  map: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
+  info: {
+    fontWeight: 'bold',
+    fontSize: 17,
+    textAlign: 'center',
+  },
+  timerHeader: {
+    textAlign: 'center',
+    fontSize: 12,
+  },
+  timer: {
+    color: 'black',
+    fontSize: 40,
+  },
+  timerContainer: {
+    paddingTop: 10,
+    alignSelf: 'center',
+  },
+  timerButtons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingTop: 30,
+  },
+
+  // Rewards Tab
+
+  rewardsTitle: {
+   fontSize: 25,
+   fontWeight: 'bold',
+   textAlign: 'center',
+   paddingTop: 84,
+  },
+  points: {
+    fontSize: 80,
+    fontWeight: 'bold',
+    color: 'green',
+    textAlign: 'center',
+    fontFamily: 'Arial',
+    paddingRight: 23,
+  },
+  pointsName: {
+   fontSize: 20,
+   textAlign: 'center',
+   
   },
 })

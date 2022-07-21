@@ -9,6 +9,7 @@ import Home from './tabs/Home'
 import Hours from './tabs/Hours'
 import Rewards from './tabs/Rewards'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import Search from './tabs/Search'
 
 const Tabs = createBottomTabNavigator()
 
@@ -17,19 +18,6 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
         <Tabs.Navigator initialRouteName={'Home'}>
-          <Tabs.Screen
-            name='Hour Tracker'
-            component={Hours}
-            options={{
-              tabBarIcon: ({ color }) => (
-                <Image
-                  style={styles.bottomTabIcon}
-                  source={require('./assets/clockIcon.png')}
-                />
-              ),
-              tabBarLabel: 'Home',
-            }}
-          />
           <Tabs.Screen
             name='Home'
             component={Home}
@@ -41,6 +29,35 @@ export default function App() {
                 />
               ),
               tabBarLabel: 'Home',
+              headerShown: false,
+            }}
+          />
+          <Tabs.Screen
+            name='Search'
+            component={Search}
+            options={{
+              tabBarIcon: ({ color }) => (
+                <Image
+                  style={styles.bottomTabIcon}
+                  source={require('./assets/Search.png')}
+                />
+              ),
+              tabBarLabel: 'Search',
+              headerShown: false,
+            }}
+          />
+          <Tabs.Screen
+            name='Hour Tracker'
+            component={Hours}
+            options={{
+              tabBarIcon: ({ color }) => (
+                <Image
+                  style={styles.bottomTabIcon}
+                  source={require('./assets/clockIcon.png')}
+                />
+              ),
+              tabBarLabel: 'Hour Tracker',
+              headerShown: false,
             }}
           />
           <Tabs.Screen
@@ -53,7 +70,8 @@ export default function App() {
                   source={require('./assets/rewardIcon.png')}
                 />
               ),
-              tabBarLabel: 'Home',
+              tabBarLabel: 'Rewards',
+              headerShown: false
             }}
           />
         </Tabs.Navigator>
