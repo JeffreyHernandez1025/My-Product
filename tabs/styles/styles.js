@@ -1,7 +1,11 @@
 import { StyleSheet, Dimensions } from 'react-native'
 import { block } from 'react-native-reanimated'
+import { useFonts } from 'expo-font'
+
+
 
 export default StyleSheet.create({
+
   // Home Tab
 
   item: {
@@ -194,25 +198,19 @@ export default StyleSheet.create({
   // Rewards Tab
 
   rewardsTitle: {
-   fontSize: 25,
-   fontWeight: 'bold',
-   textAlign: 'center',
-   paddingTop: 84,
-  },
-  points: {
-    fontSize: 80,
+    fontSize: 25,
     fontWeight: 'bold',
-    color: 'green',
     textAlign: 'center',
-    fontFamily: 'Arial',
-    paddingRight: 23,
+    paddingTop: 83,
   },
-  pointsName: {
-   fontSize: 20,
-   textAlign: 'center',
+  pointsContainer: {
+    backgroundColor: '#2B615C',
+    width: 340,
+    height: 120,
+    alignSelf: 'center',
+    borderRadius: 15,
   },
   Tabs: {
-   fontSize: 20,
-   
-  }
+    fontSize: 20,
+  },
 })
