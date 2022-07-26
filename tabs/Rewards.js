@@ -31,13 +31,31 @@ export default function Rewards() {
   const [tabInfo2, setTabInfo2] = useState([
     {
       source: require('../assets/costco.png'),
-      deals: '45%',
+      name: 'Costco',
+      price: '45% off food',
       points: '720',
+      giftCard: '45% off Costco food'
     },
     {
       source: require('../assets/mcdonalds.png'),
-      deals: 'buy 1 get 1 free',
+      name: 'Mcdonalds',
+      price: 'buy 1 get 1 free',
       points: '720',
+      giftCard: 'Get a Buy 1 Get 1 Free Discount'
+    },
+    {
+     source: require('../assets/walmart.png'),
+     name: 'Walmart',
+     price: '60% off toys',
+     points: '720',
+     giftCard: '60% off Walmart toys'
+    },
+    {
+     source: require('../assets/target.png'),
+     name: 'Target',
+     price: '20% off',
+     points: '720',
+     giftCard: '20% off of your total price at Target'
     },
   ])
 
@@ -95,7 +113,7 @@ export default function Rewards() {
     },
     {
       id: '3',
-      tabName: 'Crypto Currency',
+      tabName: 'NFT',
       status: false,
       data: tabInfo1,
     },
@@ -287,7 +305,7 @@ export default function Rewards() {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
       />
-      <ScrollView>
+      <View>
       {/* first list */}
       <View>
         <Text style={styles.listHeader}> Recommended </Text>
@@ -653,7 +671,7 @@ export default function Rewards() {
             showsHorizontalScrollIndicator={false}
           />
         </View>
-        </ScrollView>
+        </View>
     </View>
   )
 }
@@ -678,7 +696,7 @@ const styles = StyleSheet.create({
   listHeader: {
     fontFamily: 'PoppinsBold',
     fontSize: 15,
-    paddingTop: 28,
+    paddingTop: 14,
     paddingLeft: 13,
     paddingBottom: 13,
   },

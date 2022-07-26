@@ -18,9 +18,18 @@ import React, { useState, useCallback, Children } from "react";
 import styles from "./styles/styles";
 import filter from "lodash.filter";
 import DropShadow from "react-native-drop-shadow";
+import { useFonts } from "expo-font";
 
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
+
+  // Fonts
+  const [loaded] = useFonts({
+    Poppins: require('../assets/fonts/Poppins.ttf'),
+    PoppinsSemiBold: require('../assets/fonts/PoppinsSemiBold.ttf'),
+    PoppinsBold: require('../assets/fonts/PoppinsBold.ttf'),
+    PoppinsMedium: require('../assets/fonts/PoppinsMedium.ttf'),
+  })
 
   const [query, setQuery] = useState("");
 
@@ -90,7 +99,7 @@ export default function Home() {
 
   const rows = [
     {
-      title: "Popular",
+      title: "Near You",
       data: opportunities,
     },
     {
@@ -107,9 +116,38 @@ export default function Home() {
     },
   ];
 
+
+  if (!loaded) return null
+
   return (
     <View style={{ flex: 1, marginTop: 50 }}>
-      <Text> TheServiceCube  </Text>
+      <View style={{ flexDirection: 'row', marginLeft: 10 }}>
+        <Text
+          style={{
+            fontFamily: 'PoppinsSemiBold',
+            fontSize: 25,
+            marginRight: -14,
+          }}
+        >
+          {' '}
+          TheService{' '}
+        </Text>
+        <Text
+          style={{
+            fontFamily: 'PoppinsSemiBold',
+            fontSize: 25,
+            color: '#1EC677',
+          }}
+        >
+          {' '}
+          Cube{' '}
+        </Text>
+        <Image
+          style={{ marginLeft: 75, marginRight: 25, }}
+          source={require('../assets/settings.png')}
+        />
+        <Image style={{}} source={require('../assets/clipboard.png')} />
+      </View>
       <FlatList
         data={rows}
         renderItem={({ item }) => (
@@ -148,10 +186,10 @@ export default function Home() {
       />
 
       <Modal
-        animationType="slide"
+        animationType='slide'
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.")(!modalVisible);
+          Alert.alert('Modal has been closed.')(!modalVisible)
         }}
       >
         <Pressable onPress={() => setModalVisible(!modalVisible)}>
@@ -161,14 +199,14 @@ export default function Home() {
         <View style={styles.desContainer}>
           <Text style={styles.name2}> Description: </Text>
           <Text style={styles.des}>
-            {" "}
+            {' '}
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat. Duis aute irure dolor in
             reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
             pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.{" "}
+            culpa qui officia deserunt mollit anim id est laborum.{' '}
           </Text>
         </View>
         <Text style={styles.name3}> Sign Up! </Text>
@@ -178,7 +216,7 @@ export default function Home() {
           <Text
             style={styles.website}
             onPress={() =>
-              Linking.openURL("https://saveourshores.org/beachcleanups/")
+              Linking.openURL('https://saveourshores.org/beachcleanups/')
             }
           >
             https://saveourshores.org/beachcleanups/
@@ -189,7 +227,7 @@ export default function Home() {
           <Text style={styles.name5}> Location </Text>
           <TouchableOpacity
             onPress={() =>
-              Linking.openURL("maps://app?saddr=100+101&daddr=100+102")
+              Linking.openURL('maps://app?saddr=100+101&daddr=100+102')
             }
           >
             <Text stye={styles.location}> 123 Los Angeles Street,90014 </Text>
@@ -201,7 +239,7 @@ export default function Home() {
             style={styles.email}
             onPress={() =>
               Linking.openURL(
-                "mailto:alejandro@saveourshores.org?subject=SendMail&body=Description"
+                'mailto:alejandro@saveourshores.org?subject=SendMail&body=Description'
               )
             }
           >
@@ -212,14 +250,14 @@ export default function Home() {
           <Text style={styles.name7}> Phone </Text>
           <Text
             style={styles.phoneNumber}
-            onPress={() => Linking.openURL("tel:$831-462-5660")}
+            onPress={() => Linking.openURL('tel:$831-462-5660')}
           >
-            {" "}
-            831-462-5660{" "}
+            {' '}
+            831-462-5660{' '}
           </Text>
           <Text style={styles.comment2}> Tap to Call </Text>
         </View>
       </Modal>
     </View>
-  );
+  )
 }

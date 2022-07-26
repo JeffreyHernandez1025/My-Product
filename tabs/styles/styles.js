@@ -5,7 +5,6 @@ import { useFonts } from 'expo-font'
 
 
 export default StyleSheet.create({
-
   // Home Tab
 
   item: {
