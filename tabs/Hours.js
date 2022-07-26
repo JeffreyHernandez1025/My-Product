@@ -26,6 +26,7 @@ import * as Location from "expo-location";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import BottomSheet from "@gorhom/bottom-sheet";
 import Notification from "../components/notification";
+import { useFonts } from 'expo-font'
 
 import styles from "./styles/styles";
 

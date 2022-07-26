@@ -109,28 +109,9 @@ export default function Home() {
 
   return (
     <View style={{ flex: 1, marginTop: 50 }}>
+      <Text> TheServiceCube  </Text>
       <FlatList
         data={rows}
-        ListHeaderComponent={
-          <View
-            style={{
-              backgroundColor: "#fff",
-              padding: 10,
-              marginVertical: 10,
-              borderRadius: 20,
-            }}
-          >
-            <TextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              clearButtonMode="always"
-              value={query}
-              onChangeText={(queryText) => handleSearch(queryText)}
-              placeholder="Search"
-              style={{ backgroundColor: "#fff", paddingHorizontal: 20 }}
-            />
-          </View>
-        }
         renderItem={({ item }) => (
           <View style={{ paddingTop: 10 }}>
             <Text style={styles.title}> {item.title}</Text>

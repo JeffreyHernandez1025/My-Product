@@ -194,23 +194,4 @@ export default StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 30,
   },
-
-  // Rewards Tab
-
-  rewardsTitle: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    paddingTop: 83,
-  },
-  pointsContainer: {
-    backgroundColor: '#2B615C',
-    width: 340,
-    height: 120,
-    alignSelf: 'center',
-    borderRadius: 15,
-  },
-  Tabs: {
-    fontSize: 20,
-  },
 })

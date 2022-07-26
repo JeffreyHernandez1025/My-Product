@@ -17,7 +17,7 @@ import {
 import React, { useState, useCallback, Children } from 'react'
 import { Entypo } from '@expo/vector-icons' 
 
-const Logo = require('../assets/TCBlogo.png')
+const Logo = require('../assets/TSClogo.png')
 
 export default function Notification({setShowNotification}) {
   return (
