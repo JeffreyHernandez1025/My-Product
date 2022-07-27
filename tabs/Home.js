@@ -13,15 +13,16 @@ import {
   Linking,
   TouchableOpacity,
   ScrollView,
-} from "react-native";
-import React, { useState, useCallback, Children } from "react";
-import styles from "./styles/styles";
-import filter from "lodash.filter";
-import DropShadow from "react-native-drop-shadow";
-import { useFonts } from "expo-font";
+} from 'react-native'
+import React, { useState, useCallback, Children } from 'react'
+import styles from './styles/styles'
+import filter from 'lodash.filter'
+import DropShadow from 'react-native-drop-shadow'
+import { useFonts } from 'expo-font'
 
 export default function Home() {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false)
+  const [filter, setFilter] = useState('All')
 
   // Fonts
   const [loaded] = useFonts({
@@ -31,97 +32,181 @@ export default function Home() {
     PoppinsMedium: require('../assets/fonts/PoppinsMedium.ttf'),
   })
 
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('')
 
   const [opportunities, setOpportunities] = useState([
     {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      opportunity: "Beach Cleaning",
-      info: "Help clean up the beach!",
-      vb: "Volunteer block: Atleast 1 hour.",
-      uri: "https://beaches.lacounty.gov/wp-content/uploads/2021/09/Redondo-Beach-BCB_5409-1920x1105.jpg",
+      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      info: 'Save Our Shores',
+      opportunity: 'Help clean up the beach!',
+      vb: 'Volunteer block: Atleast 1 hour.',
+      uri: 'https://beaches.lacounty.gov/wp-content/uploads/2021/09/Redondo-Beach-BCB_5409-1920x1105.jpg',
+      category: 'Beach',
+      profile: require('../assets/saveourshores.png'),
     },
     {
-      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-      opportunity: "Pick Up Trash",
-      info: "Help pick up trash in your streets!",
-      vb: "Volunteer block: Atleast 1 hour.",
-      uri: "https://img.hoodline.com/uploads/story/image/569140/photo_-_volunteers_help_CleanMission_spruce_up_outside_Zoe_Bikini_18th_and_Mission_8-2019.jpeg",
+      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+      info: 'Clean Trails',
+      opportunity: 'Help pick up trash in your streets!',
+      vb: 'Volunteer block: Atleast 1 hour.',
+      uri: 'https://img.hoodline.com/uploads/story/image/569140/photo_-_volunteers_help_CleanMission_spruce_up_outside_Zoe_Bikini_18th_and_Mission_8-2019.jpeg',
+      category: 'Trash',
+      profile: require('../assets/cleantrails.jpeg'),
     },
     {
-      id: "58694a0f-3da1-471f-bd96-145571e29d72",
-      opportunity: "Business Helping",
-      info: "Help out your local businesses!",
-      vb: "Volunteer block: Atleast 1 hour.",
-      uri: "https://mcdonaldpaper.com/media/wysiwyg/blog/blog_21-10-20-2.jpg",
+      id: '58694a0f-3da1-471f-bd96-145571e29d72',
+      info: 'CalOSBA',
+      opportunity: 'Help out your local businesses!',
+      vb: 'Volunteer block: Atleast 1 hour.',
+      uri: 'https://mcdonaldpaper.com/media/wysiwyg/blog/blog_21-10-20-2.jpg',
+      category: 'Business',
+      profile: require('../assets/calosba.png'),
     },
     {
-      id: "4",
-      opportunity: "Park Cleaning",
-      info: "Help clean up your local parks!",
-      vb: "Volunteer block: Atleast 1 hour.",
-      uri: "https://media.istockphoto.com/photos/picking-up-a-plastic-bottle-during-park-cleanup-picture-id1161008212?k=20&m=1161008212&s=612x612&w=0&h=ll4BiuqmO003r2LQ66PKurXnA1rD_gbdR1wQ7K-VKOs=",
+      id: '4',
+      info: 'California State Parks',
+      opportunity: 'Help clean up your local parks!',
+      vb: 'Volunteer block: Atleast 1 hour.',
+      uri: 'https://media.istockphoto.com/photos/picking-up-a-plastic-bottle-during-park-cleanup-picture-id1161008212?k=20&m=1161008212&s=612x612&w=0&h=ll4BiuqmO003r2LQ66PKurXnA1rD_gbdR1wQ7K-VKOs=',
+      category: 'Trash',
+      profile: require('../assets/parksca.png'),
     },
     {
-      id: "5",
-      opportunity: "Gardening",
-      info: "Help your parks with new plantlife!",
-      vb: "Volunteer block: Atleast 1 hour.",
-      uri: "https://www.popsci.com/uploads/2022/04/21/garden.jpg?auto=webp&width=1440&height=1080",
+      id: '5',
+      info: 'National Gardening Club',
+      opportunity: 'Help keep the Earth green!',
+      vb: 'Volunteer block: Atleast 1 hour.',
+      uri: 'https://www.popsci.com/uploads/2022/04/21/garden.jpg?auto=webp&width=1440&height=1080',
+      category: 'Earth',
+      profile: require('../assets/ngc.png'),
     },
     {
-      id: "6",
-      opportunity: "Elementary School",
-      info: "Help out the youth at elementary schools!",
-      vb: "Volunteer block: Atleast 1 hour.",
-      uri: "https://s3-media0.fl.yelpcdn.com/bphoto/SyOO6VEokLNa9WKLvbV0lw/348s.jpg",
+      id: '6',
+      info: 'Woodcrest Elementary School',
+      opportunity: 'Help the youth in this school!',
+      vb: 'Volunteer block: Atleast 1 hour.',
+      uri: 'https://s3-media0.fl.yelpcdn.com/bphoto/SyOO6VEokLNa9WKLvbV0lw/348s.jpg',
+      category: 'School',
+      profile: require('../assets/wes.png'),
     },
-  ]);
+  ])
+
+  const [nearYou, setNearYou] = useState([
+    {
+      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      info: 'Save Our Shores',
+      opportunity: 'Help clean up the beach!',
+      vb: 'Volunteer block: Atleast 1 hour.',
+      uri: 'https://beaches.lacounty.gov/wp-content/uploads/2021/09/Redondo-Beach-BCB_5409-1920x1105.jpg',
+      category: 'Beach',
+      profile: require('../assets/saveourshores.png'),
+    },
+    {
+      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+      info: 'Clean Trails',
+      opportunity: 'Help pick up trash in your streets!',
+      vb: 'Volunteer block: Atleast 1 hour.',
+      uri: 'https://img.hoodline.com/uploads/story/image/569140/photo_-_volunteers_help_CleanMission_spruce_up_outside_Zoe_Bikini_18th_and_Mission_8-2019.jpeg',
+      category: 'Trash',
+      profile: require('../assets/cleantrails.jpeg'),
+    },
+    {
+      id: '58694a0f-3da1-471f-bd96-145571e29d72',
+      info: 'CalOSBA',
+      opportunity: 'Help out your local businesses!',
+      vb: 'Volunteer block: Atleast 1 hour.',
+      uri: 'https://mcdonaldpaper.com/media/wysiwyg/blog/blog_21-10-20-2.jpg',
+      category: 'Business',
+      profile: require('../assets/calosba.png'),
+    },
+    {
+      id: '4',
+      info: 'California State Parks',
+      opportunity: 'Help clean up your local parks!',
+      vb: 'Volunteer block: Atleast 1 hour.',
+      uri: 'https://media.istockphoto.com/photos/picking-up-a-plastic-bottle-during-park-cleanup-picture-id1161008212?k=20&m=1161008212&s=612x612&w=0&h=ll4BiuqmO003r2LQ66PKurXnA1rD_gbdR1wQ7K-VKOs=',
+      category: 'Trash',
+      profile: require('../assets/parksca.png'),
+    },
+    {
+      id: '5',
+      info: 'National Gardening Club',
+      opportunity: 'Help keep the Earth green!',
+      vb: 'Volunteer block: Atleast 1 hour.',
+      uri: 'https://www.popsci.com/uploads/2022/04/21/garden.jpg?auto=webp&width=1440&height=1080',
+      category: 'Earth',
+      profile: require('../assets/ngc.png'),
+    },
+    {
+      id: '6',
+      info: 'Woodcrest Elementary School',
+      opportunity: 'Help the youth in this school!',
+      vb: 'Volunteer block: Atleast 1 hour.',
+      uri: 'https://s3-media0.fl.yelpcdn.com/bphoto/SyOO6VEokLNa9WKLvbV0lw/348s.jpg',
+      category: 'School',
+      profile: require('../assets/wes.png'),
+    },
+  ])
 
   const handleSearch = (text) => {
-    const formattedQuery = text.toLowerCase();
+    const formattedQuery = text.toLowerCase()
     const filteredOpportunities = filter(opportunities, (user) => {
-      return contains(user, formattedQuery);
-    });
-    setOpportunities(filteredOpportunities);
-    setQuery(text);
-  };
+      return contains(user, formattedQuery)
+    })
+    setOpportunities(filteredOpportunities)
+    setQuery(text)
+  }
 
   const contains = ({ opportunity }, query) => {
-    const { name } = opportunity;
+    const { name } = opportunity
 
     if (name.includes(query)) {
-      return true;
+      return true
     }
 
-    return false;
-  };
+    return false
+  }
+
+  const rows2 = [
+    {
+      title: 'Near You',
+      data2: nearYou,
+    },
+  ]
 
   const rows = [
     {
-      title: "Near You",
+      title: 'Near You',
+      data2: nearYou,
+    },
+    {
+      title2: 'Popular',
       data: opportunities,
     },
     {
-      title: "Near You",
+      title2: 'Cooking',
       data: opportunities,
     },
     {
-      title: "Cooking",
+      title2: 'Cleaning',
       data: opportunities,
     },
-    {
-      title: "Cleaning",
-      data: opportunities,
-    },
-  ];
+  ]
 
+  const getData = (data) => {
+    return data.filter((data) => {
+      if (filter === 'All') return true
+      else {
+        return data.category === filter
+      }
+    })
+  }
 
   if (!loaded) return null
 
   return (
     <View style={{ flex: 1, marginTop: 50 }}>
-      <View style={{ flexDirection: 'row', marginLeft: 10 }}>
+      <View style={{ flexDirection: 'row', marginLeft: 10, paddingBottom: 68 }}>
         <Text
           style={{
             fontFamily: 'PoppinsSemiBold',
@@ -143,46 +228,125 @@ export default function Home() {
           Cube{' '}
         </Text>
         <Image
-          style={{ marginLeft: 75, marginRight: 25, }}
+          style={{ marginLeft: 75, marginRight: 25 }}
           source={require('../assets/settings.png')}
         />
         <Image style={{}} source={require('../assets/clipboard.png')} />
       </View>
+
       <FlatList
-        data={rows}
+        data={[
+          { id: '1', label: 'near you', data: nearYou, type: 'card' },
+          {
+            id: '',
+            label: '',
+            data: [
+              {
+                menuLabel: 'All',
+              },
+              {
+                menuLabel: 'Earth',
+              },
+              {
+                menuLabel: 'Beach',
+              },
+            ],
+            type: 'menu',
+          },
+          {
+            id: '3',
+            label: 'opportunities',
+            data: opportunities,
+            type: 'card',
+          },
+        ]}
         renderItem={({ item }) => (
-          <View style={{ paddingTop: 10 }}>
-            <Text style={styles.title}> {item.title}</Text>
-            <FlatList
-              data={item.data}
-              renderItem={({ item }) => (
-                <Pressable onPress={() => setModalVisible(true)}>
-                  <DropShadow style={styles.shadowProp}>
-                    <View style={styles.itemContainer}>
-                      <Image
-                        style={styles.image}
-                        source={{
-                          uri: item.uri,
-                        }}
-                      />
-                      <View style={styles.TextContainer}>
-                        <Text style={styles.item}>{item.opportunity}</Text>
-                        <Text style={styles.add}>{item.info}</Text>
-                        <Text style={styles.block}>{item.vb}</Text>
+          <View>
+            <Text style={styles.title}> {item.label} </Text>
+            {item.type === 'card' ? (
+              <FlatList
+                data={getData(item.data)}
+                renderItem={({ item }) => (
+                  <View>
+                    <TouchableOpacity onPress={() => setModalVisible(true)}>
+                      <View style={styles.itemContainer}>
+                        <Image
+                          style={styles.image}
+                          source={{
+                            uri: item.uri,
+                          }}
+                        />
+                        <View style={{ position: 'absolute' }}>
+                          <Text
+                            style={{
+                              fontSize: 15,
+                              fontFamily: 'Poppins',
+                              backgroundColor: 'white',
+                              paddingHorizontal: 15,
+                              paddingVertical: 5,
+                              marginLeft: 19,
+                              marginTop: 19,
+                            }}
+                          >
+                            {' '}
+                            {item.category}{' '}
+                          </Text>
+                        </View>
+                        <View style={styles.TextContainer}>
+                          <View>
+                            <Image
+                              style={{
+                                width: 35,
+                                height: 35,
+                                borderWidth: 1,
+                                borderRadius: 1000,
+                                marginTop: 23,
+                              }}
+                              source={item.profile}
+                            />
+                          </View>
+                          <View style={{ marginTop: 23 }}>
+                            <Text style={styles.item}>{item.opportunity}</Text>
+                            <Text style={styles.add}>{item.info}</Text>
+                          </View>
+                        </View>
                       </View>
-                    </View>
-                  </DropShadow>
-                </Pressable>
-              )}
-              keyExtractor={(item) => item.id}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            />
+                    </TouchableOpacity>
+                  </View>
+                )}
+                keyExtractor={(item) => item.id}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+              />
+            ) : (
+              <FlatList
+                data={item.data}
+                renderItem={({ item }) => (
+                  <View>
+                    <TouchableOpacity
+                      style={{
+                        borderWidth: 1,
+                        marginHorizontal: 5,
+                        backgroundColor:
+                          filter === item.menuLabel ? 'green' : 'white',
+                      }}
+                      onPress={() => {
+                        setFilter(item.menuLabel)
+                      }}
+                    >
+                      <View>
+                        <Text>{item.menuLabel}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                )}
+                keyExtractor={(item) => item.id}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+              />
+            )}
           </View>
         )}
-        keyExtractor={(item) => item.title}
-        horizontal={false}
-        showsVerticalScrollIndicator={false}
       />
 
       <Modal

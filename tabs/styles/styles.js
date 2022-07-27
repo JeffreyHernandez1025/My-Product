@@ -2,21 +2,30 @@ import { StyleSheet, Dimensions } from 'react-native'
 import { block } from 'react-native-reanimated'
 import { useFonts } from 'expo-font'
 
-
+function Fonts() {
+  const [loaded] = useFonts({
+    Poppins: require('../../assets/fonts/Poppins.ttf'),
+    PoppinsSemiBold: require('../../assets/fonts/PoppinsSemiBold.ttf'),
+    PoppinsBold: require('../../assets/fonts/PoppinsBold.ttf'),
+    PoppinsMedium: require('../../assets/fonts/PoppinsMedium.ttf'),
+  })
+}
 
 export default StyleSheet.create({
   // Home Tab
 
   item: {
-    marginTop: 5,
-    marginBottom: 4,
-    marginHorizontal: 0,
-    fontSize: 11,
-    fontWeight: 'bold',
+   marginTop: -3,
+    marginHorizontal: 7,
+    fontSize: 15,
+    fontFamily: 'PoppinsSemiBold',
   },
   title: {
-    fontSize: 40,
+    fontFamily: 'PoppinsSemiBold',
+    fontSize: 20,
     textAlign: 'left',
+    marginLeft: 10,
+    paddingBottom: 13,
   },
   off: {
     textAlign: 'left',
@@ -134,16 +143,21 @@ export default StyleSheet.create({
     marginRight: 5,
   },
   image: {
-    height: 138,
+    height: '100%',
     width: '100%',
   },
   itemContainer: {
     marginRight: 20,
     marginLeft: 10,
     backgroundColor: 'grey',
-    borderRadius: 10,
+    borderRadius: 15,
     overflow: 'hidden',
-    width: 209,
+    width: 320,
+    height: 260,
+    paddingBottom: 80,
+    backgroundColor: 'white',
+    borderBottomWidth: 1,
+    borderBottomColor: '#A0A0A0',
   },
   shadowProp: {
     shadowColor: '#171717',
@@ -152,17 +166,24 @@ export default StyleSheet.create({
     shadowRadius: 2,
   },
   add: {
-    fontSize: 11,
+   fontFamily: 'Poppins',
+    fontSize: 12,
     flexShrink: 1,
     flexWrap: 'wrap',
+    marginLeft: 7
   },
   block: {
     fontSize: 11,
   },
   TextContainer: {
-    width: '100%',
-    height: 75,
+    width: 320,
+    height: 100,
+    margin: 0,
     paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: '#A0A0A0',
+    borderBottomLeftRadius: 15,
+    flexDirection: 'row',
   },
 
   // Hour Tab
