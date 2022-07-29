@@ -349,8 +349,8 @@ export default function Rewards() {
                 </DropShadow>
                 <View style={{flex: 1, backgroundColor: 'red', paddingRight: 10,}}>
                   <Modal
-                    animationIn='slideInLeft'
-                    animationOut='slideOutLeft'
+                    animationIn='slideInUp'
+                    animationOut='slideOutDown'
                     coverScreen={true}
                     style={{
                       backgroundColor: 'white',
@@ -371,11 +371,11 @@ export default function Rewards() {
                       }}
                     >
                       <AntDesign
-                        name='arrowleft'
+                        name='close'
                         size={30}
-                        color='black'
+                        color='white'
                         onPress={() => setModalVisible(!modalVisible)}
-                        style={{ marginTop: 50 }}
+                        style={{ marginTop: 50, marginLeft: 22, }}
                       />
                     </ImageBackground>
                     <View style={{ flexDirection: 'row' }}>
@@ -390,6 +390,7 @@ export default function Rewards() {
                           paddingHorizontal: 15,
                           marginTop: 15,
                           marginLeft: 15,
+                          alignSelf: 'center'
                         }}
                       >
                         {' '}

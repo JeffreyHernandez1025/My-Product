@@ -8,17 +8,19 @@ import {
   Image,
   TextInput,
   Alert,
-  Modal,
   Pressable,
   Linking,
   TouchableOpacity,
   ScrollView,
+  ImageBackground,
 } from 'react-native'
 import React, { useState, useCallback, Children } from 'react'
 import styles from './styles/styles'
 import filter from 'lodash.filter'
 import DropShadow from 'react-native-drop-shadow'
 import { useFonts } from 'expo-font'
+import Modal from 'react-native-modal'
+import { SimpleLineIcons } from '@expo/vector-icons'
 
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false)
@@ -96,7 +98,6 @@ export default function Home() {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
       info: 'Save Our Shores',
       opportunity: 'Help clean up the beach!',
-      vb: 'Volunteer block: Atleast 1 hour.',
       uri: 'https://beaches.lacounty.gov/wp-content/uploads/2021/09/Redondo-Beach-BCB_5409-1920x1105.jpg',
       category: 'Beach',
       profile: require('../assets/saveourshores.png'),
@@ -105,7 +106,6 @@ export default function Home() {
       id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
       info: 'Clean Trails',
       opportunity: 'Help pick up trash in your streets!',
-      vb: 'Volunteer block: Atleast 1 hour.',
       uri: 'https://img.hoodline.com/uploads/story/image/569140/photo_-_volunteers_help_CleanMission_spruce_up_outside_Zoe_Bikini_18th_and_Mission_8-2019.jpeg',
       category: 'Trash',
       profile: require('../assets/cleantrails.jpeg'),
@@ -114,7 +114,6 @@ export default function Home() {
       id: '58694a0f-3da1-471f-bd96-145571e29d72',
       info: 'CalOSBA',
       opportunity: 'Help out your local businesses!',
-      vb: 'Volunteer block: Atleast 1 hour.',
       uri: 'https://mcdonaldpaper.com/media/wysiwyg/blog/blog_21-10-20-2.jpg',
       category: 'Business',
       profile: require('../assets/calosba.png'),
@@ -123,7 +122,6 @@ export default function Home() {
       id: '4',
       info: 'California State Parks',
       opportunity: 'Help clean up your local parks!',
-      vb: 'Volunteer block: Atleast 1 hour.',
       uri: 'https://media.istockphoto.com/photos/picking-up-a-plastic-bottle-during-park-cleanup-picture-id1161008212?k=20&m=1161008212&s=612x612&w=0&h=ll4BiuqmO003r2LQ66PKurXnA1rD_gbdR1wQ7K-VKOs=',
       category: 'Trash',
       profile: require('../assets/parksca.png'),
@@ -132,7 +130,6 @@ export default function Home() {
       id: '5',
       info: 'National Gardening Club',
       opportunity: 'Help keep the Earth green!',
-      vb: 'Volunteer block: Atleast 1 hour.',
       uri: 'https://www.popsci.com/uploads/2022/04/21/garden.jpg?auto=webp&width=1440&height=1080',
       category: 'Earth',
       profile: require('../assets/ngc.png'),
@@ -141,7 +138,6 @@ export default function Home() {
       id: '6',
       info: 'Woodcrest Elementary School',
       opportunity: 'Help the youth in this school!',
-      vb: 'Volunteer block: Atleast 1 hour.',
       uri: 'https://s3-media0.fl.yelpcdn.com/bphoto/SyOO6VEokLNa9WKLvbV0lw/348s.jpg',
       category: 'School',
       profile: require('../assets/wes.png'),
@@ -206,40 +202,12 @@ export default function Home() {
 
   return (
     <View style={{ flex: 1, marginTop: 50 }}>
-      <View style={{ flexDirection: 'row', marginLeft: 10, paddingBottom: 68 }}>
-        <Text
-          style={{
-            fontFamily: 'PoppinsSemiBold',
-            fontSize: 25,
-            marginRight: -14,
-          }}
-        >
-          {' '}
-          TheService{' '}
-        </Text>
-        <Text
-          style={{
-            fontFamily: 'PoppinsSemiBold',
-            fontSize: 25,
-            color: '#1EC677',
-          }}
-        >
-          {' '}
-          Cube{' '}
-        </Text>
-        <Image
-          style={{ marginLeft: 75, marginRight: 25 }}
-          source={require('../assets/settings.png')}
-        />
-        <Image style={{}} source={require('../assets/clipboard.png')} />
-      </View>
-
       <FlatList
         data={[
-          { id: '1', label: 'near you', data: nearYou, type: 'card' },
+          { id: '1', label: 'Near You', data: opportunities, type: 'card' },
           {
             id: '',
-            label: '',
+            label: 'Categories',
             data: [
               {
                 menuLabel: 'All',
@@ -250,176 +218,428 @@ export default function Home() {
               {
                 menuLabel: 'Beach',
               },
+              {
+                menuLabel: 'Trash',
+              },
+              {
+                menuLabel: 'Business',
+              },
+              {
+                menuLabel: 'School',
+              },
             ],
             type: 'menu',
           },
           {
             id: '3',
-            label: 'opportunities',
+            label: 'Popular',
             data: opportunities,
-            type: 'card',
+            type: 'card2',
+          },
+          {
+            id: '4',
+            label: 'Cooking',
+            data: opportunities,
+            type: 'card2',
+          },
+          {
+            id: '5',
+            label: 'Cleaning',
+            data: opportunities,
+            type: 'card2',
           },
         ]}
         renderItem={({ item }) => (
           <View>
-            <Text style={styles.title}> {item.label} </Text>
             {item.type === 'card' ? (
-              <FlatList
-                data={getData(item.data)}
-                renderItem={({ item }) => (
-                  <View>
-                    <TouchableOpacity onPress={() => setModalVisible(true)}>
-                      <View style={styles.itemContainer}>
-                        <Image
-                          style={styles.image}
-                          source={{
-                            uri: item.uri,
-                          }}
-                        />
-                        <View style={{ position: 'absolute' }}>
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginLeft: 10,
+                    paddingBottom: 68,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: 'PoppinsSemiBold',
+                      fontSize: 25,
+                      marginRight: -14,
+                    }}
+                  >
+                    {' '}
+                    TheService{' '}
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: 'PoppinsSemiBold',
+                      fontSize: 25,
+                      color: '#1EC677',
+                    }}
+                  >
+                    {' '}
+                    Cube{' '}
+                  </Text>
+                  <Image
+                    style={{ marginLeft: 75, marginRight: 25 }}
+                    source={require('../assets/settings.png')}
+                  />
+                  <Image
+                    style={{}}
+                    source={require('../assets/clipboard.png')}
+                  />
+                </View>
+                <Text
+                  style={{
+                    fontFamily:'PoppinsSemiBold',
+                    fontSize: 20,
+                    textAlign: 'left',
+                    marginLeft: filter === 'All' ? 10 : 15,
+                    paddingBottom: 13,
+                  }}
+                >
+                  {filter === 'All' ? null : 'Near You:' } {filter === 'All' ? item.label : filter}
+                </Text>
+                <FlatList
+                  data={getData(item.data)}
+                  renderItem={({ item }) => (
+                    <View>
+                      <TouchableOpacity onPress={() => setModalVisible(true)}>
+                        <View style={styles.itemContainer}>
+                          <Image
+                            style={styles.image}
+                            source={{
+                              uri: item.uri,
+                            }}
+                          />
+                          <View style={{ position: 'absolute' }}>
+                            <Text
+                              style={{
+                                fontSize: 15,
+                                fontFamily: 'PoppinsBold',
+                                backgroundColor: 'rgba(67, 182, 99, 0.7)',
+                                paddingHorizontal: 15,
+                                paddingVertical: 5,
+                                marginLeft: 19,
+                                marginTop: 19,
+                                color: 'white',
+                              }}
+                            >
+                              {' '}
+                              {item.category}{' '}
+                            </Text>
+                          </View>
+                          <View style={styles.TextContainer}>
+                            <View>
+                              <Image
+                                style={{
+                                  width: 35,
+                                  height: 35,
+                                  borderWidth: 1,
+                                  borderRadius: 1000,
+                                  marginTop: 23,
+                                }}
+                                source={item.profile}
+                              />
+                            </View>
+                            <View style={{ marginTop: 23 }}>
+                              <Text style={styles.item}>
+                                {item.opportunity}
+                              </Text>
+                              <Text style={styles.add}>{item.info}</Text>
+                            </View>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                  keyExtractor={(item) => item.id}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                />
+              </View>
+            ) : null}
+            {item.type === 'menu' ? (
+              <View>
+                <Text style={styles.label}> {item.label} </Text>
+                <FlatList
+                  data={item.data}
+                  renderItem={({ item }) => (
+                    <View>
+                      <TouchableOpacity
+                        style={{
+                          borderRadius: 5,
+                          marginLeft: 11,
+                          marginRight: 7,
+                          backgroundColor:
+                            filter === item.menuLabel ? '#1EC677' : 'white',
+                        }}
+                        onPress={() => {
+                          setFilter(item.menuLabel)
+                        }}
+                      >
+                        <View>
                           <Text
                             style={{
-                              fontSize: 15,
                               fontFamily: 'Poppins',
-                              backgroundColor: 'white',
+                              fontSize: 15,
+                              paddingVertical: 6,
                               paddingHorizontal: 15,
-                              paddingVertical: 5,
-                              marginLeft: 19,
-                              marginTop: 19,
+                              color:
+                                filter === item.menuLabel ? 'white' : 'black',
                             }}
                           >
-                            {' '}
-                            {item.category}{' '}
+                            {item.menuLabel}
                           </Text>
                         </View>
-                        <View style={styles.TextContainer}>
-                          <View>
-                            <Image
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                  keyExtractor={(item) => item.id}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                />
+              </View>
+            ) : null}
+            {item.type === 'card2' ? (
+              <View>
+                <Text style={styles.label}> {item.label} </Text>
+                <FlatList
+                  data={item.data}
+                  renderItem={({ item }) => (
+                    <View>
+                      <TouchableOpacity onPress={() => setModalVisible(true)}>
+                        <View style={styles.itemContainer}>
+                          <Image
+                            style={styles.image}
+                            source={{
+                              uri: item.uri,
+                            }}
+                          />
+                          <View style={{ position: 'absolute' }}>
+                            <Text
                               style={{
-                                width: 35,
-                                height: 35,
-                                borderWidth: 1,
-                                borderRadius: 1000,
-                                marginTop: 23,
+                                fontSize: 15,
+                                fontFamily: 'PoppinsBold',
+                                backgroundColor: 'rgba(67, 182, 99, 0.7)',
+                                paddingHorizontal: 15,
+                                paddingVertical: 5,
+                                marginLeft: 19,
+                                marginTop: 19,
+                                color: 'white',
                               }}
-                              source={item.profile}
-                            />
+                            >
+                              {' '}
+                              {item.category}{' '}
+                            </Text>
                           </View>
-                          <View style={{ marginTop: 23 }}>
-                            <Text style={styles.item}>{item.opportunity}</Text>
-                            <Text style={styles.add}>{item.info}</Text>
+                          <View style={styles.TextContainer}>
+                            <View>
+                              <Image
+                                style={{
+                                  width: 35,
+                                  height: 35,
+                                  borderWidth: 1,
+                                  borderRadius: 1000,
+                                  marginTop: 23,
+                                }}
+                                source={item.profile}
+                              />
+                            </View>
+                            <View style={{ marginTop: 23 }}>
+                              <Text style={styles.item}>
+                                {item.opportunity}
+                              </Text>
+                              <Text style={styles.add}>{item.info}</Text>
+                            </View>
                           </View>
                         </View>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                )}
-                keyExtractor={(item) => item.id}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-              />
-            ) : (
-              <FlatList
-                data={item.data}
-                renderItem={({ item }) => (
-                  <View>
-                    <TouchableOpacity
-                      style={{
-                        borderWidth: 1,
-                        marginHorizontal: 5,
-                        backgroundColor:
-                          filter === item.menuLabel ? 'green' : 'white',
-                      }}
-                      onPress={() => {
-                        setFilter(item.menuLabel)
-                      }}
-                    >
-                      <View>
-                        <Text>{item.menuLabel}</Text>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                )}
-                keyExtractor={(item) => item.id}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-              />
-            )}
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                  keyExtractor={(item) => item.id}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                />
+              </View>
+            ) : null}
           </View>
         )}
       />
 
       <Modal
-        animationType='slide'
-        visible={modalVisible}
+        animationIn='slideInLeft'
+        animationOut='slideOutLeft'
+        coverScreen={true}
+        style={{ margin: 0, backgroundColor: 'white' }}
+        isVisible={modalVisible}
         onRequestClose={() => {
           Alert.alert('Modal has been closed.')(!modalVisible)
         }}
       >
-        <Pressable onPress={() => setModalVisible(!modalVisible)}>
-          <Text style={styles.off}> Back </Text>
-        </Pressable>
-        <Text style={styles.name}> {opportunities[0].opportunity} </Text>
-        <View style={styles.desContainer}>
-          <Text style={styles.name2}> Description: </Text>
-          <Text style={styles.des}>
-            {' '}
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.{' '}
-          </Text>
+        <View style={{ flex: 1 }}>
+          <ImageBackground
+            style={{ width: '100%', height: 300, alignSelf: 'center' }}
+            source={{
+              uri: 'https://beaches.lacounty.gov/wp-content/uploads/2021/09/Redondo-Beach-BCB_5409-1920x1105.jpg',
+            }}
+          >
+            <SimpleLineIcons
+              name='arrow-left'
+              size={30}
+              color='#CACACA'
+              style={{ marginTop: 58, marginLeft: 14 }}
+              onPress={() => setModalVisible(!modalVisible)}
+            />
+            <Image
+              style={{
+                width: 40,
+                height: 40,
+                borderWidth: 1,
+                borderRadius: 300,
+                borderColor: '#0F490E',
+                marginTop: 157,
+                marginLeft: 10,
+              }}
+              source={require('../assets/saveourshores.png')}
+            />
+          </ImageBackground>
         </View>
-        <Text style={styles.name3}> Sign Up! </Text>
-        <View style={styles.websiteContainer}>
-          <Text style={styles.name4}> Website </Text>
-          {/* <OpenURLButton url={supportedURL} /> */}
-          <Text
-            style={styles.website}
+        <View style={{ flex: 1, paddingBottom: 295 }}>
+          <View style={styles.desContainer}>
+            <View style={{ flexDirection: 'row' }}>
+              <Text
+                style={{
+                  fontFamily: 'Poppins',
+                  color: '#43B663',
+                  fontSize: 12,
+                  letterSpacing: 2,
+                  backgroundColor: '#DDF2E3',
+                  paddingVertical: 10,
+                  paddingHorizontal: 20,
+                  marginTop: 15,
+                  marginLeft: 15,
+                  alignSelf: 'center',
+                }}
+              >
+                FOOD
+              </Text>
+              <View
+                style={{
+                  marginLeft: 180,
+                  flexDirection: 'row',
+                  borderWidth: 1,
+                  borderColor: '#A7A7A7',
+                  marginTop: 15,
+                  paddingHorizontal: 9,
+                  alignSelf: 'center',
+                  paddingVertical: 10,
+                }}
+              >
+                <Image
+                  style={{ width: 20, height: 20 }}
+                  source={require('../assets/clockIcon.png')}
+                />
+                <Text
+                  style={{
+                    fontFamily: 'PoppinsMedium',
+                    fontSize: 12,
+                    color: '#898989',
+                  }}
+                >
+                  {' '}
+                  21 days left{' '}
+                </Text>
+              </View>
+            </View>
+            <Text style={styles.name2}>
+              {' '}
+              Help clean up the beach in Los Angeles!{' '}
+            </Text>
+            <Text style={styles.des}>
+              On the 21st of August, our team will need extra hands to clean the
+              beach of LA in order to conserve the nature. Your help will be
+              greatly appreciated.
+            </Text>
+          </View>
+          <TouchableOpacity
             onPress={() =>
               Linking.openURL('https://saveourshores.org/beachcleanups/')
             }
           >
-            https://saveourshores.org/beachcleanups/
-          </Text>
-          <Text style={styles.comment}> *Preferred Way to Sign Up* </Text>
-        </View>
-        <View style={styles.locationContainer}>
-          <Text style={styles.name5}> Location </Text>
+            <View style={styles.websiteContainer}>
+              <Image
+                style={{ width: 22, height: 22, alignSelf: 'center' }}
+                source={require('../assets/world.png')}
+              />
+              <View style={{ marginLeft: 15 }}>
+                <Text style={styles.website}>
+                  https://saveourshores.org/beachcleanups/
+                </Text>
+                <Text style={styles.comment}> *Preferred Way to Sign Up* </Text>
+              </View>
+              <SimpleLineIcons
+                style={{ alignSelf: 'center', marginLeft: 10 }}
+                name='arrow-right'
+                size={15}
+                color='#BBBBBB'
+              />
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
               Linking.openURL('maps://app?saddr=100+101&daddr=100+102')
             }
           >
-            <Text stye={styles.location}> 123 Los Angeles Street,90014 </Text>
+            <View style={styles.locationContainer}>
+              <Image
+                style={{
+                  width: 22,
+                  height: 22,
+                  alignSelf: 'center',
+                  marginLeft: 15,
+                }}
+                source={require('../assets/POI.png')}
+              />
+              <View style={{ marginLeft: 15 }}>
+                <Text stye={styles.location}>
+                  {' '}
+                  123 Los Angeles Street,90014{' '}
+                </Text>
+              </View>
+            </View>
           </TouchableOpacity>
-        </View>
-        <View style={styles.emailContainer}>
-          <Text style={styles.name6}> Email </Text>
-          <Text
-            style={styles.email}
+          <TouchableOpacity
             onPress={() =>
               Linking.openURL(
                 'mailto:alejandro@saveourshores.org?subject=SendMail&body=Description'
               )
             }
           >
-            alejandro@saveourshores.org
-          </Text>
-        </View>
-        <View style={styles.phoneNumberContainer}>
-          <Text style={styles.name7}> Phone </Text>
-          <Text
-            style={styles.phoneNumber}
+            <View style={styles.emailContainer}>
+              <Image
+                style={{ marginLeft: 15 }}
+                source={require('../assets/mail.png')}
+              />
+              <View style={{ marginLeft: 19 }}>
+                <Text style={styles.email}>alejandro@saveourshores.org</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => Linking.openURL('tel:$831-462-5660')}
           >
-            {' '}
-            831-462-5660{' '}
-          </Text>
-          <Text style={styles.comment2}> Tap to Call </Text>
+            <View style={styles.phoneNumberContainer}>
+              <Image
+                style={{ marginLeft: 14 }}
+                source={require('../assets/phone.png')}
+              />
+              <View style={{ marginLeft: 17 }}>
+                <Text style={styles.phoneNumber}> (831) 462-5660 </Text>
+                <Text style={styles.comment2}> Tap to Call </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
         </View>
       </Modal>
     </View>
